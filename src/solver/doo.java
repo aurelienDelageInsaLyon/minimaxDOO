@@ -24,8 +24,8 @@ public class doo {
 
         this.m = m;
 
-        int nbActionsP1 = 4;
-        int nbActionsP2 = 4;
+        int nbActionsP1 = 3;
+        int nbActionsP2 = 3;
         this.nbActionsP1=nbActionsP1;
         this.nbActionsP2=nbActionsP2;
 
@@ -71,7 +71,7 @@ public class doo {
         arbre.put( new HashMap<Integer,ArrayList<ArrayList<Double>>>(tempJ2),-1.0);
         //System.out.println("DOObackup::temp : " + temp.toString());
         try{
-        this.DOOexterne(h,arbre,dJ1.size(),dJ2.size(),2,5.0,0.10,0.10);
+        this.DOOexterne(h,arbre,dJ1.size(),dJ2.size(),2,2.5,0.15,0.15);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -499,6 +499,7 @@ public class doo {
             }
             N++;
         }
+
         //System.out.println("N : "+N+"maj : "+maj+"diff : "+valAbs(maj-fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonIntfalse))+"xmax : "+xmax);
         System.out.println("maximum value of the function f : " + valXmax + " found for xmax = "+ subMax + " and the corresponding probability is " + getValidProbability(subMax)
                 + "and the real maximum of the function f is :" + fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false));//f(getValidProbability(subMax)));this.politiqueJ2 = getValidProbability(subMax);
