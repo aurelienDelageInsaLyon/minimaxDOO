@@ -18,8 +18,8 @@ public class dooNonSimplex {
     double[][] m;
 
     public dooNonSimplex(){
-        int nbActionsP1 = 1;
-        int nbActionsP2 = 1;
+        int nbActionsP1 = 2;
+        int nbActionsP2 = 2;
 
         for (int k=0; k<nbActionsP1;k++){
             this.actionsP1.add(k);
@@ -36,7 +36,7 @@ public class dooNonSimplex {
         ArrayList<ArrayList<Double>> dJ2 = new ArrayList<>();
         ArrayList<Double> a = new ArrayList<>();
 
-        a.add(-1.0);
+        a.add(0.0);
         a.add(1.0);
         for (int i = 0;i<nbActionsP1;i++){
             dJ1.add(new ArrayList<>(a));
@@ -63,7 +63,7 @@ public class dooNonSimplex {
         arbre.put( new HashMap<Integer,ArrayList<ArrayList<Double>>>(tempJ2),-1.0);
         System.out.println("DOObackup::temp : " + temp.toString());
         try{
-        this.DOOexterne(h,arbre,dJ1.size(),dJ2.size(),2,1.0,0.01,0.01);
+        this.DOOexterne(h,arbre,dJ1.size(),dJ2.size(),2,2.0,0.00001,0.00001);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -86,16 +86,18 @@ public class dooNonSimplex {
                                         boolean show) throws Exception {
         //System.out.println("x : " + x.toString());
         //System.out.println("y : " + y.toString());
-        /*double value = 0.0;
+        double value = 0.0;
 
-        value = x.get(0).get(0)  + y.get(0).get(0) - 2* x.get(0).get(0)  + y.get(0).get(0);
+        //value = -0.5 + x.get(0).get(0)  + y.get(0).get(0) - 2* x.get(0).get(0) * y.get(0).get(0);
+	value =  0.5*x.get(0).get(0)*y.get(0).get(0) - 0.5*x.get(0).get(1)*y.get(0).get(0) -  0.5*x.get(0).get(0)*y.get(0).get(1) + 0.5*x.get(0).get(1)*y.get(0).get(1);   
 
-        double entropieX =  -(x.get(0).get(0)*Math.log(x.get(0).get(0)) + x.get(0).get(1)*Math.log(x.get(0).get(1)));
-        double entropieY = -(y.get(0).get(0)*Math.log(y.get(0).get(0)) + y.get(0).get(1)*Math.log(y.get(0).get(1)));
-
-        value -= 0.5*(entropieX+entropieY);
-        return -value;*/
-        return -(x.get(0).get(0)*x.get(0).get(0) + y.get(0).get(0)+1);
+        double entropieX =  (x.get(0).get(0)*Math.log(x.get(0).get(0))/Math.log(2) + x.get(0).get(1)*Math.log(x.get(0).get(1))/Math.log(2));
+        double entropieY = (y.get(0).get(0)*Math.log(y.get(0).get(0))/Math.log(2) + y.get(0).get(1)*Math.log(y.get(0).get(1))/Math.log(2));
+        //System.out.println("entropie : " + 0*Math.log(0)/Math.log(2));
+        value +=0.5*(entropieX+entropieY);
+       
+	return -value;
+        //return -(x.get(0).get(0)*x.get(0).get(0) + y.get(0).get(0)+1);
     }
 
     public double f(HashMap<Integer,ArrayList<Double>> x, HashMap<Integer,ArrayList<Double>> y, boolean show) throws Exception {
@@ -119,8 +121,7 @@ public class dooNonSimplex {
     }
 
     public boolean IsInSimplexeDimensionNM1(ArrayList<ArrayList<Double>> subdivision){
-        return true;
-        /*
+        
         double S = 0.0;
         for (ArrayList<Double> subsInDimensions : subdivision){
             if (subsInDimensions.get(0)<0.0 || subsInDimensions.get(1)>1.0){
@@ -133,7 +134,7 @@ public class dooNonSimplex {
             return false;
         }
         //System.out.println("not keeping : " + subdivision.toString() + " because, value : " + (S - subdivision.size()*NormeInf(subdivision)));
-        return true;*/
+        return true;
     }
 
     public boolean isProbability(ArrayList<Double> x){
@@ -147,8 +148,7 @@ public class dooNonSimplex {
         return (S==1);
     }
     public boolean IsInSimplexeDimensionN(ArrayList<ArrayList<Double>> subdivision){
-        return true;
-        /*
+        
         double Sinf = 0.0;
         double Ssup = 0.0;
         for (ArrayList<Double> subsInDimensions : subdivision){
@@ -168,7 +168,7 @@ public class dooNonSimplex {
         }
         //System.out.println(" not in simplex : " + subdivision + "sum coords : " + Sinf + " Norme inf : " + NormeInf((subdivision)));
         //System.out.println("not keeping : " + subdivision.toString() + " because, value : " + (S - subdivision.size()*NormeInf(subdivision)));
-        return false;*/
+        return false;
     }
 
     private double valAbs(Double d){
@@ -180,7 +180,7 @@ public class dooNonSimplex {
     private double NormeInf(ArrayList<ArrayList<Double>> subdivision) {
         ArrayList<Double> milieu = this.milieu(subdivision);
         //System.out.println("norme inf de : " + subdivision.toString() + " : " + valAbs(subdivision.get(0).get(0) - milieu.get(0)));
-        return valAbs(subdivision.get(0).get(0) - milieu.get(0));
+        return Math.pow(valAbs(subdivision.get(0).get(0) - milieu.get(0)),1.0);
     }
 
     private ArrayList<Double> milieu(ArrayList<ArrayList<Double>> subdivision) {
@@ -289,8 +289,8 @@ public class dooNonSimplex {
             ,int dim, int partitionnement, double Lambda, double epsilon, boolean show) throws Exception {
         //Lambda = 4;
         //epsilon = 0.15;
-        int nbActionsP1 = 1;
-        int nbActionsP2 = 1;
+        int nbActionsP1 = 2;
+        int nbActionsP2 = 2;
 
         int dimJ1 = 1;
         int dimJ2 = 1;
@@ -299,7 +299,7 @@ public class dooNonSimplex {
         ArrayList<ArrayList<Double>> dJ2 = new ArrayList<>();
         ArrayList<Double> a = new ArrayList<>();
 
-        a.add(-1.0);
+        a.add(0.0);
         a.add(1.0);
         for (int i = 0;i<nbActionsP1;i++){
             dJ1.add(new ArrayList<>(a));
@@ -334,7 +334,7 @@ public class dooNonSimplex {
         HashMap<Integer,ArrayList<Double>> Ymax = milieu(subsInt.entrySet().iterator().next().getKey());
         HashMap<Integer,ArrayList<ArrayList<Double>>> subYmax = new HashMap<>(subsInt.entrySet().iterator().next().getKey());
         HashMap<HashMap<Integer,ArrayList<ArrayList<Double>>>,Double> listSubsErased = new HashMap<>();
-        subsInt.replace(subsInt.entrySet().iterator().next().getKey(),f(x,Ymax,false)+Lambda*NormeInf(subYmax));
+        subsInt.replace(subsInt.entrySet().iterator().next().getKey(),f(x,Ymax,false)+Lambda*Math.pow(NormeInf(subYmax),0.9));
         /*
         System.out.println(" x : " + x + "subsInt : " + subsInt);
         ArrayList<HashMap<Integer,ArrayList<ArrayList<Double>>>> keysToRemove = new ArrayList<>();
@@ -362,10 +362,10 @@ public class dooNonSimplex {
             for (HashMap<Integer,ArrayList<ArrayList<Double>>> subsDimension : subsInt.keySet()){//adds new values and get the argmax.
                 //double valueSubsDimension = f(milieu(subsDimension))+ valAbs((Lambda*(NormeInf(subsDimension))));
                 //double valueSubsDimension = subsInt.get(subsDimension);
-                double valueSubsDimension = f(x,milieu(subsDimension),false) + Lambda*NormeInf(subsDimension);
+                double valueSubsDimension = f(x,milieu(subsDimension),false) + Lambda*Math.pow(NormeInf(subsDimension),0.9);
                 subsInt.replace(subsDimension,valueSubsDimension);
                 //b.add(valueSubsDimension);
-                if (valueSubsDimension+Lambda*NormeInf(subsDimension)>=minorant) {
+                if (valueSubsDimension+Lambda*Math.pow(NormeInf(subsDimension),0.9)>=minorant) {
                     if (valueSubsDimension > valueArgmax) {
                         bestSubsToSubdivise = new HashMap<>(subsDimension);
                         valueArgmax = valueSubsDimension;
@@ -404,14 +404,14 @@ public class dooNonSimplex {
             subsInt.remove(bestSubsToSubdivise);
             double value;
             for (HashMap<Integer,ArrayList<ArrayList<Double>>> newSubToAdd : listNewSubdivisions){
-                value = f(x,milieu(newSubToAdd),false) + Lambda * NormeInf(newSubToAdd);
+                value = f(x,milieu(newSubToAdd),false) + Lambda * Math.pow(NormeInf(newSubToAdd),0.9);
                 subsInt.put(newSubToAdd,value);
             }
             Ymax = new HashMap<>(milieu(subsInt.entrySet().iterator().next().getKey()));
-            valYmax = f(x,Ymax,false)-Lambda*NormeInf(subsInt.entrySet().iterator().next().getKey());
+            valYmax = f(x,Ymax,false)-Lambda*Math.pow(NormeInf(subsInt.entrySet().iterator().next().getKey()),0.9);
             subYmax = new HashMap<>(subsInt.entrySet().iterator().next().getKey());
             double valPourMaj = subsInt.get(subsInt.entrySet().iterator().next().getKey());//+ Lambda*NormeInf(subsExt.entrySet().iterator().next().getKey());
-            double valPourMin = valPourMaj - 2*Lambda*NormeInf(subsInt.entrySet().iterator().next().getKey());
+            double valPourMin = valPourMaj - 2*Lambda*Math.pow(NormeInf(subsInt.entrySet().iterator().next().getKey()),0.9);
             double valPourMax = valAbs(valPourMaj - valPourMin)/2;
             double valSub = -100000;
             //initialize majorant and minorant that have to be recalculated.
@@ -420,19 +420,19 @@ public class dooNonSimplex {
             for (HashMap<Integer,ArrayList<ArrayList<Double>>> subsToGetMax : subsInt.keySet()){
                 //System.out.println("xmax in the boucle : "+xmax);
                 valSub = subsInt.get(subsToGetMax);
-                if ((valSub - Lambda*NormeInf(subsToGetMax)) > valYmax){
+                if ((valSub - Lambda*Math.pow(NormeInf(subsToGetMax),0.9)) > valYmax){
                     //System.out.println("changing xmax :" + Ymax + " for xmax: "+ subsToGetMax);
                     Ymax = new HashMap<>(milieu(subsToGetMax));
                     subYmax = new HashMap<>(subsToGetMax);
                     //System.out.println("xmax now : "+xmax);
-                    valYmax = valSub - Lambda*NormeInf(subsToGetMax);
+                    valYmax = valSub - Lambda*Math.pow(NormeInf(subsToGetMax),0.9);
                 }
                 if (valSub>maj){
                     //System.out.println("setting up majorant");
                     maj = valSub;
                 }
-                if (valSub - 2* Lambda*NormeInf(subsToGetMax)<minorant){
-                    minorant = valSub - 2* Lambda*NormeInf(subsToGetMax);
+                if (valSub - 2* Lambda*Math.pow(NormeInf(subsToGetMax),0.9)<minorant){
+                    minorant = valSub - 2* Lambda*Math.pow(NormeInf(subsToGetMax),0.9);
                 }
             }
 
@@ -440,7 +440,7 @@ public class dooNonSimplex {
             double valueFromErased = -10000;
             for (HashMap<Integer,ArrayList<ArrayList<Double>>> subsToGetMax : listSubsErased.keySet()){
                 valueFromErased = listSubsErased.get(subsToGetMax);
-                if ((valueFromErased-Lambda*NormeInf(subsToGetMax))>valYmax){
+                if ((valueFromErased-Lambda*Math.pow(NormeInf(subsToGetMax),0.9))>valYmax){
                     //System.out.println("xmax is an erased one : " + subsToGetMax + "valueFromErased:" + valueFromErased + "valXmax : "+ valXmax);
                     //valYmax = valueFromErased-Lambda*NormeInf(subsToGetMax);
                     //Ymax = new HashMap<>(milieu(subsToGetMax));
@@ -456,7 +456,7 @@ public class dooNonSimplex {
         ///!\ TODO
         System.out.println("subsYmax : " + subYmax);
         this.strategyP2 = getDistributionFromArrayList(getValidProbability(subYmax),1);
-        System.out.println("best response :" + subYmax);
+        System.out.println("best response :" + subYmax+ " value : " + f(x,getValidProbability(subYmax),show));
         return f(x,getValidProbability(subYmax),show);
         //return valYmax;
 
@@ -476,11 +476,12 @@ public class dooNonSimplex {
         HashMap<Integer,ArrayList<Double>> xmax = milieu(subsExt.entrySet().iterator().next().getKey());
         HashMap<Integer,ArrayList<ArrayList<Double>>> subMax = new HashMap<>(subsExt.entrySet().iterator().next().getKey());
         HashMap<HashMap<Integer,ArrayList<ArrayList<Double>>>,Double> listSubsErased = new HashMap<>();
-        while (valAbs(maj - fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false))> epsilonExt){
+        while (valAbs(maj - valXmax)> epsilonExt){
             //while(N<100){
             System.out.println("subsext : " + subsExt);
             System.out.println("Nmax : "+N+"maj : "+maj+"diff : "+
-                valAbs(maj-fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false))+"submax : "+subMax);
+                valAbs(maj-fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false)) + " min : " + 
+                valXmax +"submax : "+subMax);
             //System.out.println("état de hashmap :  " + subsExt);
             HashMap<Integer,ArrayList<Double>> b = new HashMap<>();
             HashMap<Integer,ArrayList<ArrayList<Double>>> bestSubsToSubdivise = new HashMap();
@@ -492,14 +493,14 @@ public class dooNonSimplex {
                 //double valueSubsDimension = f(milieu(subsDimension))+ valAbs((Lambda*(NormeInf(subsDimension))));
                 double valueSubsDimension = subsExt.get(subsDimension);
                 //b.add(valueSubsDimension);
-                if (valueSubsDimension+Lambda*NormeInf(subsDimension)>=minorant) {
+                if (valueSubsDimension+Lambda*Math.pow(NormeInf(subsDimension),0.9)>=minorant) {
                     if (valueSubsDimension > valueArgmax) {
                         bestSubsToSubdivise = new HashMap<>(subsDimension);
                         valueArgmax = valueSubsDimension;
                     }
                 }
                 else{
-                    System.out.println("supressing " + subsDimension + "because value : " + valueSubsDimension+Lambda*NormeInf(subsDimension) + " and minorant : " + minorant);
+                    System.out.println("supressing " + subsDimension + "because value : " + valueSubsDimension+Lambda*Math.pow(NormeInf(subsDimension),0.9) + " and minorant : " + minorant);
                     System.exit(1);
                     toBeSupressed.add(subsDimension);
                 }
@@ -515,7 +516,7 @@ public class dooNonSimplex {
             double value;
             for (HashMap<Integer,ArrayList<ArrayList<Double>>> newSubToAdd : listNewSubdivisions){
                 //value = f(milieu(newSubToAdd)) + Lambda * NormeInf(newSubToAdd);
-                value = fExt(newSubToAdd,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false) + Lambda * NormeInf(newSubToAdd);
+                value = fExt(newSubToAdd,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false) + Lambda * Math.pow(NormeInf(newSubToAdd),0.9);
                 //System.out.println(newSubToAdd.toString());
                 //System.out.println("Lambda*normeInt : " + Lambda*NormeInf(newSubToAdd) + "Lambda : " + Lambda + "NormeInf :" + NormeInf(newSubToAdd));
                 //System.out.println("value : " + (value -  Lambda*NormeInf(newSubToAdd)) + " + Lambda*normInt : " + Lambda*NormeInf(newSubToAdd) + " = " + value);
@@ -523,10 +524,10 @@ public class dooNonSimplex {
             }
             //xmax = new ArrayList<Double>(milieu(subsExt.entrySet().iterator().next().getKey()));
             //valXmax = f(xmax)-Lambda*NormeInf(subsExt.entrySet().iterator().next().getKey());
-            valXmax = subsExt.get(subsExt.entrySet().iterator().next().getKey()) - Lambda*NormeInf(subsExt.entrySet().iterator().next().getKey());
+            valXmax = subsExt.get(subsExt.entrySet().iterator().next().getKey()) - Lambda*Math.pow(NormeInf(subsExt.entrySet().iterator().next().getKey()),0.9);
             subMax = new HashMap<>(subsExt.entrySet().iterator().next().getKey());
             double valPourMaj = subsExt.get(subsExt.entrySet().iterator().next().getKey());//+ Lambda*NormeInf(subsExt.entrySet().iterator().next().getKey());
-            double valPourMin = valPourMaj - 2*Lambda*NormeInf(subsExt.entrySet().iterator().next().getKey());
+            double valPourMin = valPourMaj - 2*Lambda*Math.pow(NormeInf(subsExt.entrySet().iterator().next().getKey()),0.9);
             double valPourMax = valAbs(valPourMaj - valPourMin)/2;
             double valSub = -100000;
             //initialize majorant and minorant that have to be recalculated.
@@ -535,19 +536,19 @@ public class dooNonSimplex {
             for (HashMap<Integer,ArrayList<ArrayList<Double>>> subsToGetMax : subsExt.keySet()){
                 //System.out.println("xmax in the boucle : "+xmax);
                 valSub = subsExt.get(subsToGetMax);
-                if ((valSub - Lambda*NormeInf(subsToGetMax)) > valXmax){
+                if ((valSub - Lambda*Math.pow(NormeInf(subsToGetMax),0.9)) > valXmax){
                     //System.out.println("changing xmax :" + xmax + " for xmax: "+ subsToGetMax);
                     //xmax = new HashMap<Double>(milieu(subsToGetMax));
                     subMax = new HashMap<>(subsToGetMax);
                     //System.out.println("xmax now : "+xmax);
-                    valXmax = valSub - Lambda*NormeInf(subsToGetMax);
+                    valXmax = valSub - Lambda*Math.pow(NormeInf(subsToGetMax),0.9);
                 }
                 if (valSub>maj){
                     //System.out.println("setting up majorant");
                     maj = valSub;
                 }
-                if (valSub - 2* Lambda*NormeInf(subsToGetMax)<minorant){
-                    minorant = valSub - 2* Lambda*NormeInf(subsToGetMax);
+                if (valSub - 2* Lambda*Math.pow(NormeInf(subsToGetMax),0.9)<minorant){
+                    minorant = valSub - 2* Lambda*Math.pow(NormeInf(subsToGetMax),0.9);
                 }
             }
 
@@ -555,7 +556,7 @@ public class dooNonSimplex {
             double valueFromErased = -10000;
             for (HashMap<Integer,ArrayList<ArrayList<Double>>> subsToGetMax : listSubsErased.keySet()){
                 valueFromErased = listSubsErased.get(subsToGetMax);
-                if ((valueFromErased-Lambda*NormeInf(subsToGetMax))>valXmax){
+                if ((valueFromErased-Lambda*Math.pow(NormeInf(subsToGetMax),0.9))>valXmax){
                     //System.out.println("xmax is an erased one : " + subsToGetMax + "valueFromErased:" + valueFromErased + "valXmax : "+ valXmax);
                     //valXmax = valueFromErased-Lambda*NormeInf(subsToGetMax);
                     //xmax = new ArrayList<Double>(milieu(subsToGetMax));
@@ -564,8 +565,9 @@ public class dooNonSimplex {
             }
             N++;
         }
-        System.out.println("N : "+N+"maj : "+maj+"diff : "+valAbs(maj-fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false))+"xmax : "+xmax);
-        System.out.println("maximum value of the function f : " + valXmax + " found for xmax = "+ subMax + " and the corresponding probability is " + getValidProbability(subMax)
+        System.out.println("NmaxEnd : "+N+"maj : "+maj+ "min : "  + fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false)
+         + "diff : "+valAbs(maj-fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false))+"xmax : "+xmax);
+        System.out.println("NmaxEndValues : " + N + " maximum value of the function f : " + valXmax + " found for xmax = "+ subMax + " and the corresponding probability is " + getValidProbability(subMax)
                 + "and the real maximum of the function f is :" + fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false));//f(getValidProbability(subMax)));this.politiqueJ2 = getValidProbability(subMax);
         this.strategyP1 = getDistributionFromArrayList(getValidProbability(subMax),0);
         this.finalValue = fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,true);
@@ -635,7 +637,7 @@ public class dooNonSimplex {
                 val = temp;
             }
         }
-        return val;
+        return Math.pow(val,1);
     }
 
     private HashMap<Integer,ArrayList<Double>> milieu(HashMap<Integer, ArrayList<ArrayList<Double>>> key) {
