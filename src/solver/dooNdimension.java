@@ -20,7 +20,7 @@ public class dooNdimension {
 
     double[][] m;
 
-    public dooNdimension(double[][] m){
+    public dooNdimension(double[][] m,double holderianConstantP1,double holderianConstantP2){
 
         this.m = m;
 
@@ -70,9 +70,8 @@ public class dooNdimension {
         //arbre.put( new HashMap<Integer,ArrayList<ArrayList<Double>>>(temp),-1.0);
         arbre.put( new HashMap<Integer,ArrayList<ArrayList<Double>>>(tempJ2),-1.0);
         //System.out.println("DOObackup::temp : " + temp.toString());
-        double lamba = 2.5*3;
         try{
-        this.DOOexterne(h,arbre,dJ1.size(),dJ2.size(),2,lamba,0.15,0.15);
+        this.DOOexterne(h,arbre,dJ1.size(),dJ2.size(),2,holderianConstantP1*(this.nbActionsP1+1),holderianConstantP2*(this.nbActionsP2+1),0.01,0.01);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -134,8 +133,8 @@ public class dooNdimension {
     public double fExt(HashMap<Integer,ArrayList<ArrayList<Double>>> x,
                        HashMap<HashMap<Integer,ArrayList<ArrayList<Double>>>,Double> subsInt,
                        int dim, int partionnement, double Lambda, double epsilonInt, boolean show) throws Exception {
-
-        return -DOOinterne(milieu(x),subsInt,dim,partionnement,Lambda,epsilonInt,show);
+         return 0;
+         //return -DOOinterne(milieu(x),subsInt,dim,partionnement,Lambda,epsilonInt,show);
 
     }
 
@@ -387,12 +386,12 @@ public class dooNdimension {
 
     public void DOOexterne(HashMap<HashMap<Integer,ArrayList<ArrayList<Double>>>, Double> subsExt,
                            HashMap<HashMap<Integer,ArrayList<ArrayList<Double>>>, Double> subsInt, int dimJ1, int dimJ2, int partitionnement,
-                           double Lambda, double epsilonExt, double epsilonInt) throws Exception {
+                           double holderianConstantP1,double holderianConstantP2, double epsilonExt, double epsilonInt) throws Exception {
 
         //Lambda = 4;
         //epsilonExt = 0.2;
         //System.out.println("DOObackup:: subsExt : " + subsExt + " subsInt : " + subsInt);
-        System.out.println("lambda : " + Lambda);
+        System.out.println("lambda : " + holderianConstantP1);
         int N = 0;
         double maj = Double.POSITIVE_INFINITY;
         double minorant = Double.NEGATIVE_INFINITY;
@@ -401,11 +400,11 @@ public class dooNdimension {
         HashMap<Integer,ArrayList<ArrayList<Double>>> subMax = new HashMap<>(subsExt.entrySet().iterator().next().getKey());
         HashMap<HashMap<Integer,ArrayList<ArrayList<Double>>>,Double> listSubsErased = new HashMap<>();
 
-        while (valAbs(maj - fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false))> epsilonExt){
+        while (valAbs(maj - fExt(subMax,subsInt,dimJ2,partitionnement,holderianConstantP2,epsilonInt,false))> epsilonExt){
             //while(N<100){
 
             System.out.println("Nmax : "+N+"maj : "+maj+"diff : "+
-                valAbs(maj-fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false))+"submax : "+subMax);
+                valAbs(maj-fExt(subMax,subsInt,dimJ2,partitionnement,holderianConstantP2,epsilonInt,false))+"submax : "+subMax);
             HashMap<Integer,ArrayList<Double>> b = new HashMap<>();
             HashMap<Integer,ArrayList<ArrayList<Double>>> bestSubsToSubdivise = new HashMap();
             int argmax = -1;
@@ -418,7 +417,7 @@ public class dooNdimension {
                 //b.add(valueSubsDimension);
                 //System.out.println("minorant : " + minorant);
 
-                if (valueSubsDimension+Lambda*NormeInf(subsDimension)>=minorant) {
+                if (valueSubsDimension+holderianConstantP1*NormeInf(subsDimension)>=minorant) {
                     if (valueSubsDimension > valueArgmax) {
                         bestSubsToSubdivise = new HashMap<>(subsDimension);
                         valueArgmax = valueSubsDimension;
@@ -441,7 +440,7 @@ public class dooNdimension {
             double value;
             for (HashMap<Integer,ArrayList<ArrayList<Double>>> newSubToAdd : listNewSubdivisions){
 
-                value = fExt(newSubToAdd,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false) + Lambda * NormeInf(newSubToAdd);
+                value = fExt(newSubToAdd,subsInt,dimJ2,partitionnement,holderianConstantP2,epsilonInt,false) + holderianConstantP1 * NormeInf(newSubToAdd);
                 //System.out.println(newSubToAdd.toString());
                 //System.out.println("Lambda*normeInt : " + Lambda*NormeInf(newSubToAdd) + "Lambda : " + Lambda + "NormeInf :" + NormeInf(newSubToAdd));
                 //System.out.println("value : " + (value -  Lambda*NormeInf(newSubToAdd)) + " + Lambda*normInt : " + Lambda*NormeInf(newSubToAdd) + " = " + value);
@@ -449,10 +448,10 @@ public class dooNdimension {
             }
             //xmax = new ArrayList<Double>(milieu(subsExt.entrySet().iterator().next().getKey()));
             //valXmax = f(xmax)-Lambda*NormeInf(subsExt.entrySet().iterator().next().getKey());
-            valXmax = subsExt.get(subsExt.entrySet().iterator().next().getKey()) - Lambda*NormeInf(subsExt.entrySet().iterator().next().getKey());
+            valXmax = subsExt.get(subsExt.entrySet().iterator().next().getKey()) - holderianConstantP1*NormeInf(subsExt.entrySet().iterator().next().getKey());
             subMax = new HashMap<>(subsExt.entrySet().iterator().next().getKey());
             double valPourMaj = subsExt.get(subsExt.entrySet().iterator().next().getKey());//+ Lambda*NormeInf(subsExt.entrySet().iterator().next().getKey());
-            double valPourMin = valPourMaj - 2*Lambda*NormeInf(subsExt.entrySet().iterator().next().getKey());
+            double valPourMin = valPourMaj - 2*holderianConstantP1*NormeInf(subsExt.entrySet().iterator().next().getKey());
             double valPourMax = valAbs(valPourMaj - valPourMin)/2;
             double valSub = -100000;
             //initialize majorant and minorant that have to be recalculated.
@@ -461,19 +460,19 @@ public class dooNdimension {
             for (HashMap<Integer,ArrayList<ArrayList<Double>>> subsToGetMax : subsExt.keySet()){
                 //System.out.println("xmax in the boucle : "+xmax);
                 valSub = subsExt.get(subsToGetMax);
-                if ((valSub - Lambda*NormeInf(subsToGetMax)) > valXmax){
+                if ((valSub - holderianConstantP1*NormeInf(subsToGetMax)) > valXmax){
                     //System.out.println("changing xmax :" + xmax + " for xmax: "+ subsToGetMax);
                     //xmax = new HashMap<Double>(milieu(subsToGetMax));
                     subMax = new HashMap<>(subsToGetMax);
                     //System.out.println("xmax now : "+xmax);
-                    valXmax = valSub - Lambda*NormeInf(subsToGetMax);
+                    valXmax = valSub - holderianConstantP1*NormeInf(subsToGetMax);
                 }
                 if (valSub>maj){
                     //System.out.println("setting up majorant");
                     maj = valSub;
                 }
-                if (valSub - 2* Lambda*NormeInf(subsToGetMax)<minorant){
-                    minorant = valSub - 2* Lambda*NormeInf(subsToGetMax);
+                if (valSub - 2* holderianConstantP1*NormeInf(subsToGetMax)<minorant){
+                    minorant = valSub - 2* holderianConstantP1*NormeInf(subsToGetMax);
                 }
             }
 
@@ -487,9 +486,9 @@ public class dooNdimension {
         //        valAbs(maj-fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false))+"submax : "+subMax);
         //System.out.println("N : "+N+"maj : "+maj+"diff : "+valAbs(maj-fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonIntfalse))+"xmax : "+xmax);
         System.out.println("maximum value of the function f : " + valXmax + " found for xmax = "+ subMax + " and the corresponding probability is " + milieu(subMax)
-                + "and the real maximum of the function f is :" + fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false));//f(getValidProbability(subMax)));this.politiqueJ2 = getValidProbability(subMax);
+                + "and the real maximum of the function f is :" + fExt(subMax,subsInt,dimJ2,partitionnement,holderianConstantP2,epsilonInt,false));//f(getValidProbability(subMax)));this.politiqueJ2 = getValidProbability(subMax);
         this.strategyP1 = getDistributionFromArrayList(milieu(subMax),0);
-        this.finalValue = fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,true);
+        this.finalValue = fExt(subMax,subsInt,dimJ2,partitionnement,holderianConstantP2,epsilonInt,true);
     }
     private HashMap<Integer, Distribution<Integer>> getDistributionFromArrayList(HashMap<Integer, ArrayList<Double>> x, int player) {
         //System.out.println("x : " + x);

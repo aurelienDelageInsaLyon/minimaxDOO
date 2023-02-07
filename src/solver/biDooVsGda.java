@@ -6,7 +6,7 @@ import util.MatrixX;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class dooHeuristic {
+public class biDooVsGda {
     
     public static ArrayList<Integer> actionsP1 = new ArrayList<Integer>();
     public static ArrayList<Integer> actionsP2 = new ArrayList<Integer>();
@@ -15,19 +15,11 @@ public class dooHeuristic {
     public static HashMap<Integer,Distribution<Integer>> strategyP1 = new HashMap<>();
     public static HashMap<Integer,Distribution<Integer>> strategyP2 = new HashMap<>();
 
-    private int nbActionsP1;
-    private int nbActionsP2;
-
     double[][] m;
 
-    public dooHeuristic(double[][] m,double C1, double C2){
-
-        this.m = m;
-
-        int nbActionsP1 = 4;
-        int nbActionsP2 = 4;
-        this.nbActionsP1=nbActionsP1;
-        this.nbActionsP2=nbActionsP2;
+    public biDooVsGda(){
+        int nbActionsP1 = 2;
+        int nbActionsP2 = 2;
 
         for (int k=0; k<nbActionsP1;k++){
             this.actionsP1.add(k);
@@ -49,8 +41,13 @@ public class dooHeuristic {
         for (int i = 0;i<nbActionsP1;i++){
             dJ1.add(new ArrayList<>(a));
         }
+
+        ArrayList<Double> b = new ArrayList<>();
+
+        b.add(0.0);
+        b.add(1.0);
         for (int i = 0;i<nbActionsP2;i++){
-            dJ2.add(new ArrayList<>(a));
+            dJ2.add(new ArrayList<>(b));
         }
 
         HashMap<Integer,ArrayList<ArrayList<Double>>> temp = new HashMap<>();
@@ -71,7 +68,7 @@ public class dooHeuristic {
         arbre.put( new HashMap<Integer,ArrayList<ArrayList<Double>>>(tempJ2),-1.0);
         System.out.println("DOObackup::temp : " + temp.toString());
         try{
-        this.DOOexterne(h,arbre,dJ1.size(),dJ2.size(),2,C1,C2,0.01,0.01);
+        this.DOOexterne(h,arbre,dJ1.size(),dJ2.size(),2,1.0,0.0001,0.0001);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -79,13 +76,22 @@ public class dooHeuristic {
         }
     }
 
+    public double f(ArrayList<Double> x,ArrayList<Double> y) throws Exception {
+        if (x.size() != y.size()){
+            throw new Exception("x and y have different dimension!");
+        }
+        double S = 0;
+        for (int i = 0; i<x.size();i++){
+            S+= x.get(i) + y.get(i);
+        }
+        return S;
+    }
 
     public double fonctionRecompense(HashMap<Integer,ArrayList<Double>> x, HashMap<Integer,ArrayList<Double>> y,
                                         boolean show) throws Exception {
         //System.out.println("x : " + x.toString());
         //System.out.println("y : " + y.toString());
-        /*
-        double value = 0.0;
+        /*double value = 0.0;
 
         value = x.get(0).get(0)  + y.get(0).get(0) - 2* x.get(0).get(0)  + y.get(0).get(0);
 
@@ -94,13 +100,13 @@ public class dooHeuristic {
 
         value -= 0.5*(entropieX+entropieY);
         return -value;*/
-        double S = 0.0;
-        for (int i = 0;i<this.nbActionsP1;i++){
-            for (int j = 0;j<this.nbActionsP2;j++){
-                S+= x.get(0).get(i)*y.get(0).get(j)*this.m[i][j];
-            }
-        }
-        return S;
+        //return -(x.get(0).get(0)*x.get(0).get(0) + y.get(0).get(0)+1);
+        //return x.get(0).get(0)*x.get(0).get(0) - y.get(0).get(0)*y.get(0).get(0) + 4 * y.get(0).get(0)*x.get(0).get(0);
+    	double s = 0;
+
+	s = x.get(0).get(0)*y.get(0).get(0) + x.get(0).get(1)*y.get(0).get(1);
+	
+	return -s;
     }
 
     public double f(HashMap<Integer,ArrayList<Double>> x, HashMap<Integer,ArrayList<Double>> y, boolean show) throws Exception {
@@ -109,9 +115,9 @@ public class dooHeuristic {
 
     public double fExt(HashMap<Integer,ArrayList<ArrayList<Double>>> x,
                        HashMap<HashMap<Integer,ArrayList<ArrayList<Double>>>,Double> subsInt,
-                       int dim, int partionnement, double Lambda, double epsilonInt, boolean show, double lowerBound) throws Exception {
+                       int dim, int partionnement, double Lambda, double epsilonInt, boolean show) throws Exception {
 
-        return -DOOinterne(getValidProbability(x),subsInt,dim,partionnement,Lambda,epsilonInt,show, lowerBound);
+        return -DOOinterne(getValidProbability(x),subsInt,dim,partionnement,Lambda,epsilonInt,show);
 
     }
 
@@ -124,6 +130,8 @@ public class dooHeuristic {
     }
 
     public boolean IsInSimplexeDimensionNM1(ArrayList<ArrayList<Double>> subdivision){
+        //return true;
+        
         double S = 0.0;
         for (ArrayList<Double> subsInDimensions : subdivision){
             if (subsInDimensions.get(0)<0.0 || subsInDimensions.get(1)>1.0){
@@ -150,7 +158,7 @@ public class dooHeuristic {
         return (S==1);
     }
     public boolean IsInSimplexeDimensionN(ArrayList<ArrayList<Double>> subdivision){
-	double Sinf = 0.0;
+        double Sinf = 0.0;
         double Ssup = 0.0;
         for (ArrayList<Double> subsInDimensions : subdivision){
             if (subsInDimensions.get(0)<0.0 || subsInDimensions.get(1)>1.0){
@@ -185,6 +193,11 @@ public class dooHeuristic {
     }
 
     private ArrayList<Double> milieu(ArrayList<ArrayList<Double>> subdivision) {
+        //return subdivision.get(0).get(0)
+        /*ArrayList<Double> res= new ArrayList<>();
+        res.add(subdivision.get(0).get(0));
+        return res;*/
+        
         ArrayList<Double> milieu = new ArrayList<>();
         for (ArrayList<Double> list : subdivision){
             milieu.add(0.5*(list.get(1)+list.get(0)));
@@ -231,7 +244,7 @@ public class dooHeuristic {
         ArrayList<ArrayList<ArrayList<Double>>> ListSuppSimplexe = new ArrayList<>();
         for (ArrayList<ArrayList<Double>> carapuce : S) {
             if (!this.IsInSimplexeDimensionN(carapuce)) {
-                //System.out.println("Not keeping:"+carapuce.toString());
+                System.out.println("Not keeping:"+carapuce.toString());
                 ListSuppSimplexe.add(carapuce);
             }
         }
@@ -282,186 +295,238 @@ public class dooHeuristic {
 
     public double DOOinterne(HashMap<Integer,ArrayList<Double>> x,
                              HashMap<HashMap<Integer,ArrayList<ArrayList<Double>>>,Double> subsInt
-            ,int dim, int partitionnement, double Lambda, double epsilon, boolean show, double lowerBound) throws Exception {
+            ,int dim, int partitionnement, double Lambda, double epsilon, boolean show) throws Exception {
 
         int N = 0;
-        double maj = Double.POSITIVE_INFINITY;
-        double minorant = -Double.POSITIVE_INFINITY;
-        double valYmax = -Double.POSITIVE_INFINITY;
-
-        HashMap<Integer,ArrayList<Double>> Ymax = getValidProbability(subsInt.entrySet().iterator().next().getKey());
+        double maj = 100000;
+        double minorant = -100000;
+        double valYmax = -100000;
+        HashMap<Integer,ArrayList<Double>> Ymax = milieu(subsInt.entrySet().iterator().next().getKey());
         HashMap<Integer,ArrayList<ArrayList<Double>>> subYmax = new HashMap<>(subsInt.entrySet().iterator().next().getKey());
-
+        HashMap<HashMap<Integer,ArrayList<ArrayList<Double>>>,Double> listSubsErased = new HashMap<>();
         subsInt.replace(subsInt.entrySet().iterator().next().getKey(),f(x,Ymax,false)+Lambda*NormeInf(subYmax));
-       
+        /*
+        System.out.println(" x : " + x + "subsInt : " + subsInt);
+        ArrayList<HashMap<Integer,ArrayList<ArrayList<Double>>>> keysToRemove = new ArrayList<>();
+        for (HashMap<Integer,ArrayList<ArrayList<Double>>> key : subsInt.keySet()){
+            if (!(-key.get(0).get(0).get(0)<=1-x.get(0).get(0))){
+                keysToRemove.add(key);
+            }
+        }
+        for (int i = 0; i< keysToRemove.size();i++){
+            System.out.println("removing : " + keysToRemove.get(i));
+            subsInt.remove(keysToRemove.get(i));
+        }
+        */
+
         while (valAbs(maj - f(x,Ymax,false))> epsilon){
+            //System.out.println("Nint : "+N+"maj : "+maj+"diff : "+valAbs(maj-f(x,Ymaxfalse))+"xmax : "+Ymax);
+            //ArrayList<Double> b = new ArrayList<>();
             HashMap<Integer,ArrayList<ArrayList<Double>>> bestSubsToSubdivise = new HashMap<>();
-
-            double valueArgmax = -Double.POSITIVE_INFINITY;
-
+            int argmax = -1;
+            double valueArgmax = -10000000;
+            int indice=0;
             ArrayList<HashMap<Integer,ArrayList<ArrayList<Double>>>> toBeSupressed = new ArrayList<>();
-            for (HashMap<Integer,ArrayList<ArrayList<Double>>> subsDimension : subsInt.keySet()){
-                //System.out.println(" minorant : " + minorant);
-                double valueSubsDimension = f(x,getValidProbability(subsDimension),false) + Lambda*NormeInf(subsDimension);
+            for (HashMap<Integer,ArrayList<ArrayList<Double>>> subsDimension : subsInt.keySet()){//adds new values and get the argmax.
+                //double valueSubsDimension = f(milieu(subsDimension))+ valAbs((Lambda*(NormeInf(subsDimension))));
+                //double valueSubsDimension = subsInt.get(subsDimension);
+                double valueSubsDimension = f(x,milieu(subsDimension),false) + Lambda*NormeInf(subsDimension);
                 subsInt.replace(subsDimension,valueSubsDimension);
-                if (valueSubsDimension>=minorant) {
+                //b.add(valueSubsDimension);
+                if (valueSubsDimension+Lambda*NormeInf(subsDimension)>=minorant) {
                     if (valueSubsDimension > valueArgmax) {
                         bestSubsToSubdivise = new HashMap<>(subsDimension);
                         valueArgmax = valueSubsDimension;
                     }
                 }
                 else{
-                    //System.out.println("inner, supressing : " + subsDimension);
                     toBeSupressed.add(subsDimension);
                 }
+                indice ++;
             }
             for (HashMap<Integer,ArrayList<ArrayList<Double>>> tmpSupressed : toBeSupressed){
                 subsInt.remove(tmpSupressed);
             }
             ArrayList<HashMap<Integer,ArrayList<ArrayList<Double>>>> listNewSubdivisions = new ArrayList<>();
             listNewSubdivisions = SubdiviserPdtCartesien(bestSubsToSubdivise,dim,partitionnement);
+            ArrayList<HashMap<Integer,ArrayList<ArrayList<Double>>>> listToRemove = new ArrayList<>();
 
+            for (HashMap<Integer,ArrayList<ArrayList<Double>>> h : listToRemove){
+                listNewSubdivisions.remove(h);
+            }
+            listSubsErased.put(bestSubsToSubdivise,valueArgmax);
             subsInt.remove(bestSubsToSubdivise);
             double value;
             for (HashMap<Integer,ArrayList<ArrayList<Double>>> newSubToAdd : listNewSubdivisions){
-                value = f(x,getValidProbability(newSubToAdd),false) + Lambda * NormeInf(newSubToAdd);
+                value = f(x,milieu(newSubToAdd),false) + Lambda * NormeInf(newSubToAdd);
                 subsInt.put(newSubToAdd,value);
             }
-            Ymax = new HashMap<>(getValidProbability(subsInt.entrySet().iterator().next().getKey()));
+            Ymax = new HashMap<>(milieu(subsInt.entrySet().iterator().next().getKey()));
             valYmax = f(x,Ymax,false)-Lambda*NormeInf(subsInt.entrySet().iterator().next().getKey());
             subYmax = new HashMap<>(subsInt.entrySet().iterator().next().getKey());
-            
-
-            maj = -Double.POSITIVE_INFINITY;
-
+            double valPourMaj = subsInt.get(subsInt.entrySet().iterator().next().getKey());//+ Lambda*NormeInf(subsExt.entrySet().iterator().next().getKey());
+            double valPourMin = valPourMaj - 2*Lambda*NormeInf(subsInt.entrySet().iterator().next().getKey());
+            double valPourMax = valAbs(valPourMaj - valPourMin)/2;
+            double valSub = -100000;
+            //initialize majorant and minorant that have to be recalculated.
+            maj = valPourMaj;
+            minorant = valPourMin;
             for (HashMap<Integer,ArrayList<ArrayList<Double>>> subsToGetMax : subsInt.keySet()){
-
-                double valSub = subsInt.get(subsToGetMax);
+                //System.out.println("xmax in the boucle : "+xmax);
+                valSub = subsInt.get(subsToGetMax);
                 if ((valSub - Lambda*NormeInf(subsToGetMax)) > valYmax){
-                    Ymax = new HashMap<>(getValidProbability(subsToGetMax));
+                    //System.out.println("changing xmax :" + Ymax + " for xmax: "+ subsToGetMax);
+                    Ymax = new HashMap<>(milieu(subsToGetMax));
+                    subYmax = new HashMap<>(subsToGetMax);
+                    //System.out.println("xmax now : "+xmax);
                     valYmax = valSub - Lambda*NormeInf(subsToGetMax);
                 }
-                maj = (valSub>maj) ? valSub : maj;
-               
-	       //	minorant = (valSub-Lambda*NormeInf(subsToGetMax) >minorant) ? valSub-Lambda*NormeInf(subsToGetMax) : minorant;
-		minorant=valYmax;
+                if (valSub>maj){
+                    //System.out.println("setting up majorant");
+                    maj = valSub;
+                }
+                if (valSub - 2* Lambda*NormeInf(subsToGetMax)<minorant){
+                    minorant = valSub - 2* Lambda*NormeInf(subsToGetMax);
+                }
             }
-            //System.out.println("lower bound : " + lowerBound);
-            //System.out.println("maj : " + maj + " min : " + minorant); 
-            if (-maj<lowerBound){
-                System.out.println("inner : no point about continuing");
-     //           return -minorant;
-            }
-        }
 
-        this.strategyP2 = getDistributionFromArrayList(Ymax,1);
-        return f(x,Ymax,show);
+            //now searching on the list of erased subs if the suppressed middle of a subdivision is interesting
+            double valueFromErased = -10000;
+            for (HashMap<Integer,ArrayList<ArrayList<Double>>> subsToGetMax : listSubsErased.keySet()){
+                valueFromErased = listSubsErased.get(subsToGetMax);
+                if ((valueFromErased-Lambda*NormeInf(subsToGetMax))>valYmax){
+                    //System.out.println("xmax is an erased one : " + subsToGetMax + "valueFromErased:" + valueFromErased + "valXmax : "+ valXmax);
+                    //valYmax = valueFromErased-Lambda*NormeInf(subsToGetMax);
+                    //Ymax = new HashMap<>(milieu(subsToGetMax));
+                    //subYmax = new HashMap<>(subsToGetMax);
+                }
+            }
+            N++;
+        }
+        //System.out.println("returning : " + valYmax + " found for " + getValidProbability(subYmax));
+        //return f(x,getValidProbability(subYmax),M);
+        //System.out.println("really returning : " + f(x,getValidProbability(subYmax),M));
+
+        ///!\ TODO
+        System.out.println("subsYmax : " + subYmax);
+        this.strategyP2 = getDistributionFromArrayList(getValidProbability(subYmax),1);
+        System.out.println("best response :" + subYmax);
+        return f(x,getValidProbability(subYmax),show);
+        //return valYmax;
 
     }
 
     public void DOOexterne(HashMap<HashMap<Integer,ArrayList<ArrayList<Double>>>, Double> subsExt,
                            HashMap<HashMap<Integer,ArrayList<ArrayList<Double>>>, Double> subsInt, int dimJ1, int dimJ2, int partitionnement,
-                           double LambdaP1, double LambdaP2, double epsilonExt, double epsilonInt) throws Exception {
+                           double Lambda, double epsilonExt, double epsilonInt) throws Exception {
 
+        //Lambda = 4;
+        //epsilonExt = 0.2;
+        //System.out.println("DOObackup:: subsExt : " + subsExt + " subsInt : " + subsInt);
         int N = 0;
-        double maj = Double.POSITIVE_INFINITY;
-        double minorant = Double.NEGATIVE_INFINITY;
-        double valXmax = Double.NEGATIVE_INFINITY;
-
+        double maj = 100000;
+        double minorant = -100000;
+        double valXmax = -100000;
+        HashMap<Integer,ArrayList<Double>> xmax = milieu(subsExt.entrySet().iterator().next().getKey());
         HashMap<Integer,ArrayList<ArrayList<Double>>> subMax = new HashMap<>(subsExt.entrySet().iterator().next().getKey());
         HashMap<HashMap<Integer,ArrayList<ArrayList<Double>>>,Double> listSubsErased = new HashMap<>();
-
-        //while (valAbs(maj - fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false))> epsilonExt){
-        while (valAbs(maj - minorant)>epsilonExt){
-            System.out.println("N : " + N + " diff : " + valAbs(maj - minorant));
-            //todo : at each loop, lower-bound was updated so new subs could be pruned.
-
-            //System.out.println("Nmax : "+N+"maj : "+maj+"diff : "+
-            //    valAbs(maj-fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false))+"submax : "+subMax);
-
-            
-            //will store the argmax
+        while (valAbs(maj - fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false))> epsilonExt){
+            //while(N<100){
+            System.out.println("subsext : " + subsExt);
+            System.out.println("Nmax : "+N+"maj : "+maj+"diff : "+
+                valAbs(maj-fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false))+"submax : "+subMax);
+            //System.out.println("état de hashmap :  " + subsExt);
+            HashMap<Integer,ArrayList<Double>> b = new HashMap<>();
             HashMap<Integer,ArrayList<ArrayList<Double>>> bestSubsToSubdivise = new HashMap();
-
-            double valueArgmax = Double.NEGATIVE_INFINITY;
-
-            //store the prunable subdivisions
+            int argmax = -1;
+            double valueArgmax = -10000000;
+            int indice=0;
             ArrayList<HashMap<Integer,ArrayList<ArrayList<Double>>>> toBeSupressed = new ArrayList<>();
-
             for (HashMap<Integer,ArrayList<ArrayList<Double>>> subsDimension : subsExt.keySet()){//adds new values and get the argmax.
+                //double valueSubsDimension = f(milieu(subsDimension))+ valAbs((Lambda*(NormeInf(subsDimension))));
                 double valueSubsDimension = subsExt.get(subsDimension);
-                //System.out.println("minorant : " + minorant);
-
-                 if (valueSubsDimension>=minorant) {
+                //b.add(valueSubsDimension);
+                if (valueSubsDimension+Lambda*NormeInf(subsDimension)>=minorant) {
                     if (valueSubsDimension > valueArgmax) {
                         bestSubsToSubdivise = new HashMap<>(subsDimension);
                         valueArgmax = valueSubsDimension;
                     }
                 }
                 else{
+                    System.out.println("supressing " + subsDimension + "because value : " + valueSubsDimension+Lambda*NormeInf(subsDimension) + " and minorant : " + minorant);
+                    System.exit(1);
                     toBeSupressed.add(subsDimension);
                 }
+                indice ++;
             }
-
             for (HashMap<Integer,ArrayList<ArrayList<Double>>> tmpSupressed : toBeSupressed){
                 subsExt.remove(tmpSupressed);
             }
-
-            //stores the subdividing of the argmax
             ArrayList<HashMap<Integer,ArrayList<ArrayList<Double>>>> listNewSubdivisions = new ArrayList<>();
             listNewSubdivisions = SubdiviserPdtCartesien(bestSubsToSubdivise,dimJ1,partitionnement);
-            
             listSubsErased.put(bestSubsToSubdivise,valueArgmax);
             subsExt.remove(bestSubsToSubdivise);
-
             double value;
             for (HashMap<Integer,ArrayList<ArrayList<Double>>> newSubToAdd : listNewSubdivisions){
-                
-                double valInnerDOO = fExt(newSubToAdd,subsInt,dimJ2,partitionnement,LambdaP2,epsilonInt,false,minorant);
-                value = valInnerDOO + LambdaP1 * NormeInf(newSubToAdd);
+                //value = f(milieu(newSubToAdd)) + Lambda * NormeInf(newSubToAdd);
+                value = fExt(newSubToAdd,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false) + Lambda * NormeInf(newSubToAdd);
+                //System.out.println(newSubToAdd.toString());
+                //System.out.println("Lambda*normeInt : " + Lambda*NormeInf(newSubToAdd) + "Lambda : " + Lambda + "NormeInf :" + NormeInf(newSubToAdd));
+                //System.out.println("value : " + (value -  Lambda*NormeInf(newSubToAdd)) + " + Lambda*normInt : " + Lambda*NormeInf(newSubToAdd) + " = " + value);
                 subsExt.put(newSubToAdd,value);
-                
+            }
+            //xmax = new ArrayList<Double>(milieu(subsExt.entrySet().iterator().next().getKey()));
+            //valXmax = f(xmax)-Lambda*NormeInf(subsExt.entrySet().iterator().next().getKey());
+            valXmax = subsExt.get(subsExt.entrySet().iterator().next().getKey()) - Lambda*NormeInf(subsExt.entrySet().iterator().next().getKey());
+            subMax = new HashMap<>(subsExt.entrySet().iterator().next().getKey());
+            double valPourMaj = subsExt.get(subsExt.entrySet().iterator().next().getKey());//+ Lambda*NormeInf(subsExt.entrySet().iterator().next().getKey());
+            double valPourMin = valPourMaj - 2*Lambda*NormeInf(subsExt.entrySet().iterator().next().getKey());
+            double valPourMax = valAbs(valPourMaj - valPourMin)/2;
+            double valSub = -100000;
+            //initialize majorant and minorant that have to be recalculated.
+            maj = valPourMaj;
+            minorant = valPourMin;
+            for (HashMap<Integer,ArrayList<ArrayList<Double>>> subsToGetMax : subsExt.keySet()){
+                //System.out.println("xmax in the boucle : "+xmax);
+                valSub = subsExt.get(subsToGetMax);
+                if ((valSub - Lambda*NormeInf(subsToGetMax)) > valXmax){
+                    //System.out.println("changing xmax :" + xmax + " for xmax: "+ subsToGetMax);
+                    //xmax = new HashMap<Double>(milieu(subsToGetMax));
+                    subMax = new HashMap<>(subsToGetMax);
+                    //System.out.println("xmax now : "+xmax);
+                    valXmax = valSub - Lambda*NormeInf(subsToGetMax);
+                }
+                if (valSub>maj){
+                    //System.out.println("setting up majorant");
+                    maj = valSub;
+                }
+                if (valSub - 2* Lambda*NormeInf(subsToGetMax)<minorant){
+                    minorant = valSub - 2* Lambda*NormeInf(subsToGetMax);
+                }
             }
 
-            //update the argmax value
-            valXmax = subsExt.get(subsExt.entrySet().iterator().next().getKey()) - LambdaP1*NormeInf(subsExt.entrySet().iterator().next().getKey());
-            subMax = new HashMap<>(subsExt.entrySet().iterator().next().getKey());
-
-            double valSub;
-
-            //initialize majorant and minorant that have to be recalculated.
-            maj = Double.NEGATIVE_INFINITY;//valPourMaj;
-            //minorant = valPourMin;
-	    
-            for (HashMap<Integer,ArrayList<ArrayList<Double>>> subsToGetMax : subsExt.keySet()){
-
-                valSub = subsExt.get(subsToGetMax);//f(x,y)+\lamba ||SubX-milieu(SubX)||_{\infty}
-
-                //update best x
-                if ((valSub - LambdaP1*NormeInf(subsToGetMax)) > valXmax){//f(x,y)>valXmax
-                    subMax = new HashMap<>(subsToGetMax);
-                    valXmax = valSub - LambdaP1*NormeInf(subsToGetMax);
+            //now searching on the list of erased subs if the suppressed middle of a subdivision is interesting
+            double valueFromErased = -10000;
+            for (HashMap<Integer,ArrayList<ArrayList<Double>>> subsToGetMax : listSubsErased.keySet()){
+                valueFromErased = listSubsErased.get(subsToGetMax);
+                if ((valueFromErased-Lambda*NormeInf(subsToGetMax))>valXmax){
+                    //System.out.println("xmax is an erased one : " + subsToGetMax + "valueFromErased:" + valueFromErased + "valXmax : "+ valXmax);
+                    //valXmax = valueFromErased-Lambda*NormeInf(subsToGetMax);
+                    //xmax = new ArrayList<Double>(milieu(subsToGetMax));
+                    //subMax = new HashMap<>(subsToGetMax);
                 }
-
-                //update upper bound
-                maj = (valSub>maj) ? valSub : maj;
-
-                //update lower bound
-                //minorant = (valSub-LambdaP1*NormeInf(subsToGetMax)>minorant) ? valSub-LambdaP1*NormeInf(subsToGetMax) : minorant;
-            	minorant = valXmax;
-	    }
-
+            }
             N++;
         }
-        //System.out.println("N : "+N+"maj : "+maj+"diff : "+valAbs(maj-fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonIntfalse))+"xmax : "+xmax);
+        System.out.println("N : "+N+"maj : "+maj+"diff : "+valAbs(maj-fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false))+"xmax : "+xmax);
         System.out.println("maximum value of the function f : " + valXmax + " found for xmax = "+ subMax + " and the corresponding probability is " + getValidProbability(subMax)
-                + "and the real maximum of the function f is :" + fExt(subMax,subsInt,dimJ2,partitionnement,LambdaP2,epsilonInt,false,minorant));//f(getValidProbability(subMax)));this.politiqueJ2 = getValidProbability(subMax);
+                + "and the real maximum of the function f is :" + fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,false));//f(getValidProbability(subMax)));this.politiqueJ2 = getValidProbability(subMax);
         this.strategyP1 = getDistributionFromArrayList(getValidProbability(subMax),0);
-        this.finalValue = fExt(subMax,subsInt,dimJ2,partitionnement,LambdaP2,epsilonInt,true,minorant);
+        this.finalValue = fExt(subMax,subsInt,dimJ2,partitionnement,Lambda,epsilonInt,true);
     }
-
     private HashMap<Integer, Distribution<Integer>> getDistributionFromArrayList(HashMap<Integer, ArrayList<Double>> x, int player) {
-        //System.out.println("x : " + x);
+        System.out.println("x : " + x);
+        
         //System.out.println("player : " + player);
         HashMap<Integer,Distribution<Integer>> res = new HashMap<>();
         if (player == 0) {//player 1.
@@ -471,11 +536,12 @@ public class dooHeuristic {
                 for (int i =0;i<ListActions.size();i++){
                     distrib.addWeight(ListActions.get(i),x.get(h).get(i));
                 }
+                /*
                 try {
                     distrib.sanityCheck();
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
+                }*/
                 res.put(h,distrib);
             }
         } else {
@@ -535,6 +601,9 @@ public class dooHeuristic {
     }
 
     private ArrayList<Double> getValidProbability(ArrayList<ArrayList<Double>> subMax) {
+        //System.out.println("returnin middle of : " + subMax + " : " + milieu(subMax));
+        return milieu(subMax);
+        /*
         ArrayList<Double> validProbability = new ArrayList<>();
         double sumCoord = 0.0;
         for (ArrayList<Double> coordCoins: subMax){
@@ -548,14 +617,8 @@ public class dooHeuristic {
         //System.out.println("from : "+subMax+" should be a probability ! ---------------");
         this.isProbability(validProbability);
         //System.out.println("--------------------------");
-        return validProbability;
+        return validProbability;*/
     }
 
-    private double getHeuristicValue(ArrayList<ArrayList<Double>> subMax){
-        ArrayList<Double> validProbability = this.getValidProbability(subMax);
-        double res = 0.0;
-
-        return res;
-    }  
 
 }
