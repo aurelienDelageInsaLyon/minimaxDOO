@@ -1,0 +1,120 @@
+delage@delage-Latitude-5310:~/SagtProject/minimaxDOO/src$ java -Djava.library.path=../lib/ -cp .:../lib/Jama-1.0.3.jar:../lib/cplex.jar solver.main 1.0 0.05 0.5 0.5 1
+seed : 1
+ 0.7308781907032909 0.41008081149220166 0.20771484130971707 0.3327170559595112 0.9677559094241207 0.006117182265761301 0.9637047970232077 0.9398653887819098 0.9471949176631939args[0] : 1.0
+Hölderian constant used : 2.878655624110522,2.662338897150619
+epsilon : 0.05
+choosen repartition : 0.5,0.5
+constMult : 1.0
+
+ value Cplex : 0.9400763599621182
+ value  for epsilon : 0.05constMult : 1.0repatition : (0.5,0.5)0.9386290943622633 time : 86604
+value maximin : 0.9386290943622633
+ valueDooHeuristic  for epsilon : 0.05constMult : 1.0repatition : (0.5,0.5) time : 249917
+delage@delage-Latitude-5310:~/SagtProject/minimaxDOO/src$ java -Djava.library.path=../lib/ -cp .:../lib/Jama-1.0.3.jar:../lib/cplex.jar solver.main 1.0 0.05 0.5 0.5 2
+seed : 2
+ 0.7311469360199058 0.9014476240300544 0.49682259343089075 0.9858769332362016 0.8571240443456863 0.9874208338984266 0.2281579303734177 0.07479382813444624 0.7431577182910525args[0] : 1.0
+Hölderian constant used : 2.8747453911646828,2.6320261762195334
+epsilon : 0.05
+choosen repartition : 0.5,0.5
+constMult : 1.0
+
+ value Cplex : 0.8679204260164102
+ value  for epsilon : 0.05constMult : 1.0repatition : (0.5,0.5)0.8659734648246097 time : 102518
+value maximin : 0.8660835522448226
+ valueDooHeuristic  for epsilon : 0.05constMult : 1.0repatition : (0.5,0.5) time : 250428
+delage@delage-Latitude-5310:~/SagtProject/minimaxDOO/src$ java -Djava.library.path=../lib/ -cp .:../lib/Jama-1.0.3.jar:../lib/cplex.jar solver.main 1.0 0.05 0.5 0.5 3
+seed : 3
+ 0.731057369148862 0.07099203475193139 0.06712000939049956 0.768156984078079 0.22733466107144407 0.6603196166875382 0.806673557557068 0.029817676716547004 0.8111701180817663args[0] : 1.0
+Hölderian constant used : 1.8451783367102785,2.310384471308707
+epsilon : 0.05
+choosen repartition : 0.5,0.5
+constMult : 1.0
+
+ value Cplex : 0.22733466107144407
+ value  for epsilon : 0.05constMult : 1.0repatition : (0.5,0.5)0.22641315170646176 time : 2555
+value maximin : 0.22895091738903134
+ valueDooHeuristic  for epsilon : 0.05constMult : 1.0repatition : (0.5,0.5) time : 257292
+delage@delage-Latitude-5310:~/SagtProject/minimaxDOO/src$ java -Djava.library.path=../lib/ -cp .:../lib/Jama-1.0.3.jar:../lib/cplex.jar solver.main 1.0 0.05 0.5 0.5 4
+seed : 4
+ 0.7306094602878371 0.9187140138555101 0.9186071189908658 0.6795571637816596 0.07838777450255496 0.02481356043541838 0.6992516934753201 0.8049369643305346 0.15123210213417404args[0] : 1.0
+Hölderian constant used : 2.567930593134213,2.4032081419677045
+epsilon : 0.05
+choosen repartition : 0.5,0.5
+constMult : 1.0
+
+ value Cplex : 0.7306094602878371
+ value  for epsilon : 0.05constMult : 1.0repatition : (0.5,0.5)0.7306355544117059 time : 130315
+value maximin : 0.7313576654029895
+ valueDooHeuristic  for epsilon : 0.05constMult : 1.0repatition : (0.5,0.5) time : 360950
+delage@delage-Latitude-5310:~/SagtProject/minimaxDOO/src$ java -Djava.library.path=../lib/ -cp .:../lib/Jama-1.0.3.jar:../lib/cplex.jar solver.main 1.0 0.05 0.5 0.5 5
+seed : 5
+ 0.730519863614471 0.08825840967622589 0.4889045498516358 0.461837214623537 0.4485983912283127 0.6977123432245299 0.2777673057578094 0.7599608278137966 0.21924450192488787args[0] : 1.0
+Hölderian constant used : 2.1881930346527976,2.1881930346527976
+epsilon : 0.05
+choosen repartition : 0.5,0.5
+constMult : 1.0
+
+ value Cplex : 0.4662875907171124
+ value  for epsilon : 0.05constMult : 1.0repatition : (0.5,0.5)0.46561952470281787 time : 156878
+value maximin : 0.4656244780109129
+ valueDooHeuristic  for epsilon : 0.05constMult : 1.0repatition : (0.5,0.5) time : 277510
+delage@delage-Latitude-5310:~/SagtProject/minimaxDOO/src$ java -Djava.library.path=../lib/ -cp .:../lib/Jama-1.0.3.jar:../lib/cplex.jar solver.main 1.0 0.05 0.5 0.5 6
+seed : 6
+ 0.7307886238322471 0.5796252073129174 0.7780122870716483 0.11499709190022733 0.33796652614987843 0.6790159650548728 0.5422204391080193 0.8948892373640106 0.015207317453907687args[0] : 1.0
+Hölderian constant used : 2.403690148267906,2.351917489490532
+epsilon : 0.05
+choosen repartition : 0.5,0.5
+constMult : 1.0
+
+ value Cplex : 0.6376403346322428
+ value  for epsilon : 0.05constMult : 1.0repatition : (0.5,0.5)0.6365053336080412 time : 103987
+value maximin : 0.6366236545058077
+ valueDooHeuristic  for epsilon : 0.05constMult : 1.0repatition : (0.5,0.5) time : 286105
+delage@delage-Latitude-5310:~/SagtProject/minimaxDOO/src$ java -Djava.library.path=../lib/ -cp .:../lib/Jama-1.0.3.jar:../lib/cplex.jar solver.main 1.0 0.05 0.5 0.5 7
+seed : 7
+ 0.7306990420600421 0.7491696031336331 0.34830970303125697 0.8972771427421047 0.7081771577767972 0.35191477764630685 0.12073605139050847 0.8499131008472726 0.08321971724462152args[0] : 1.0
+Hölderian constant used : 2.099105021235684,2.4963598467230104
+epsilon : 0.05
+choosen repartition : 0.5,0.5
+constMult : 1.0
+
+ value Cplex : 0.35191477764630685
+ value  for epsilon : 0.05constMult : 1.0repatition : (0.5,0.5)0.3512056627113675 time : 22735
+value maximin : 0.35355218039551267
+ valueDooHeuristic  for epsilon : 0.05constMult : 1.0repatition : (0.5,0.5) time : 283386
+delage@delage-Latitude-5310:~/SagtProject/minimaxDOO/src$ java -Djava.library.path=../lib/ -cp .:../lib/Jama-1.0.3.jar:../lib/cplex.jar solver.main 1.0 0.05 0.5 0.5 8
+seed : 8
+ 0.7302511331990172 0.5968915822372118 0.1997967977304621 0.8086773224456854 0.559230256306747 0.7164086915918646 0.01331418730876055 0.6250323884612602 0.42328168639586805args[0] : 1.0
+Hölderian constant used : 2.1501184024988103,2.163960844105963
+epsilon : 0.05
+choosen repartition : 0.5,0.5
+constMult : 1.0
+
+ value Cplex : 0.5813189371698723
+ value  for epsilon : 0.05constMult : 1.0repatition : (0.5,0.5)0.5810735483002402 time : 161417
+value maximin : 0.5810847990144172
+ valueDooHeuristic  for epsilon : 0.05constMult : 1.0repatition : (0.5,0.5) time : 367366
+delage@delage-Latitude-5310:~/SagtProject/minimaxDOO/src$ java -Djava.library.path=../lib/ -cp .:../lib/Jama-1.0.3.jar:../lib/cplex.jar solver.main 1.0 0.05 0.5 0.5 9
+seed : 9
+ 0.7301615514268123 0.7664359929590888 0.7700942285912321 0.5909573732875627 0.9294408879336659 0.3893074743809761 0.5918297995912498 0.5800562370433611 0.4912940712854207args[0] : 1.0
+Hölderian constant used : 2.4296966679517102,2.291364916116148
+epsilon : 0.05
+choosen repartition : 0.5,0.5
+constMult : 1.0
+
+ value Cplex : 0.7301615514268123
+ value  for epsilon : 0.05constMult : 1.0repatition : (0.5,0.5)0.7295375959738173 time : 62233
+value maximin : 0.7296363903384654
+ valueDooHeuristic  for epsilon : 0.05constMult : 1.0repatition : (0.5,0.5) time : 305169
+delage@delage-Latitude-5310:~/SagtProject/minimaxDOO/src$ java -Djava.library.path=../lib/ -cp .:../lib/Jama-1.0.3.jar:../lib/cplex.jar solver.main 1.0 0.05 0.5 0.5 10
+seed : 10
+ 0.7304302967434272 0.2578027905957804 0.059201965811244595 0.24411725056425315 0.8188090228552316 0.37061112601364143 0.8562829329414597 0.7149846763958975 0.2872568868144405args[0] : 1.0
+Hölderian constant used : 2.045703081810333,2.4055222525401185
+epsilon : 0.05
+choosen repartition : 0.5,0.5
+constMult : 1.0
+
+ value Cplex : 0.3554515304012763
+ value  for epsilon : 0.05constMult : 1.0repatition : (0.5,0.5)0.3546056651498938 time : 7709
+
+ 364082

@@ -1,0 +1,209 @@
+package solver;
+
+import java.util.Random;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+public class main
+{
+
+	public static void main(String[] args) {
+		
+	    /*
+
+	    //doo Doo = new doo();
+		System.out.println("bla");
+		//dooNonSimplex DooNonSimplex = new dooNonSimplex();
+		
+		//dooNonSimplex DooNonSimplex = new dooNonSimplex();
+		//biDooVsGda dooVsGda = new biDooVsGda();
+
+		//System.exit(1);
+		//biDooSimple Doo = new biDooSimple();
+		//System.exit(1);
+    		double[][] m = new double[3][3];
+    		Random rand = new Random();
+
+            for (int i = 0; i < m.length; i++) {
+                double s =0;
+        		for (int j = 0; j < m[0].length; j++) {
+                	m[i][j] = rand.nextDouble();
+                    s+=m[i][j];
+                }
+       } 
+       */
+
+        //doo doo = new dooNdimension(m,1,0);
+       // doo Doo = new doo(m,1,1);
+        //System.exit(1);
+ 	
+            int N=0;
+            double constantMult = 1.0;
+
+            if (args.length>0){
+                constantMult=Double.valueOf(args[0]);
+            }
+
+            double normInfX = 0.0;
+            double normInfY = 0.0;
+
+    		double[][] m = new double[4][4];
+		double[][] mForCplex = new double[4][4];
+		Random rand = new Random();
+
+            for (int i = 0; i < m.length; i++) {
+                double s =0;
+        		for (int j = 0; j < m[0].length; j++) {
+                	m[i][j] = rand.nextDouble();
+                	mForCplex[i][j] = m[i][j];
+                   // s+=m[i][j];
+                }
+                if (s>normInfX){
+                    normInfX=s;
+                }
+            }
+         for (int i = 0; i < m.length; i++) {
+                System.out.println("");
+                for (int j = 0; j < m[0].length; j++) {
+                    System.out.print(" "+m[i][j]);
+                }
+            }
+
+	    CplexSolver cplexSolver = new CplexSolver();
+	    
+	    double valueCplex = cplexSolver.getActionMax(mForCplex);   
+	    /*
+            for (int i = 0; i < m[0].length; i++) {
+                double s =0;
+                for (int j = 0; j < m.length; j++) {
+                    //s+=m[j][i];
+                }
+                if (s>normInfY){
+                    normInfY=s;
+                }
+            }
+*/
+		double normeInf = -1;
+		for (int i =0; i<m.length;i++){
+		    for (int j = 0; j<m[0].length;j++){
+		    	if (m[i][j]>normeInf){
+			    normeInf=m[i][j];
+			}
+		    }
+		}
+
+
+            //System.out.println("normInfX : " + normInfX);
+            //System.out.println("normInfY : " + normInfY);
+            System.out.println("normeInf : " + normeInf);
+            //normInfX = constantMult*normInfX;
+            //normInfY = constantMult*normInfY;
+            
+            
+/* 0.3359455541304265 0.663833380966936 0.2011071237267157 0.8616010571680351
+ 0.8211105768670633 0.0989429118954196 0.29940134766152604 0.16722216890257957
+ 0.16426879322260257 0.37406284379991106 0.9523774610728043 0.9722032379868102
+ 0.5307355878615233 0.11784762371886581 0.8758437304074285 0.30756980832687286
+
+   0.25720146714532455 0.9772208090767662 0.9700972404665602 0.7588002536739892
+ 0.18619838961998025 0.47673451896375296 0.2738129210628061 0.9616080972390336
+ 0.10522283212025252 0.14100333907528395 0.6429513897194672 0.9476172592953082
+ 0.1866561808253987 0.3886485895136138 0.7484213450906356 0.8933010997953313
+*/
+
+	    /*
+	    m[0][0] = 0.25720146714532455;
+           m[0][1] = 0.9772208090767662;
+           m[0][2] = 0.9700972404665602;
+           m[0][3] = 0.7588002536739892;
+ 
+           m[1][0] =  0.18619838961998025 ;
+           m[1][1] =  0.47673451896375296;
+          m[1][2] =  0.2738129210628061;
+         m[1][3] =  0.9616080972390336;
+
+         m[2][0] = 0.10522283212025252; m[2][1]=  0.14100333907528395;
+          m[2][2] =  0.6429513897194672 ;m[2][3] = 0.9476172592953082;
+
+         m[3][0] = 0.1866561808253987; m[3][1] = 0.3886485895136138; 
+         m[3][2] = 0.7484213450906356; m[3][3] = 0.8933010997953313;
+ 		
+	 
+	 
+	 m[0][0] = 0.2833700820754086;
+	       m[0][1] = 0.09100084272271158;
+	       m[0][2] = 0.5449633978206638;
+	       m[0][3] = 0.3283275755500029;
+ 
+	       m[1][0] =  0.2886531232977 ;
+	       m[1][1] =  0.17729562421165923;
+	      m[1][2] =  0.8282224325427086;
+	     m[1][3] =  0.9038986515119705;
+
+	     m[2][0] = 0.292100661673249; m[2][1]=  0.990617487929755; m[2][2] =  0.3014777406754998 ;m[2][3] = 0.04382782562644072;
+	     m[3][0] = 0.1162161303203838; m[3][1] = 0.6002236800180937; m[3][2] = 0.6264586710336657; m[3][3] = 0.43163832448953976;
+*/
+
+        doo Doo2 = new doo(m,normeInf,normeInf);
+	   System.out.println("\n value Cplex : " + valueCplex + " value DOO " + Doo2.finalValue);
+System.exit(1);            
+          	long start = System.currentTimeMillis();
+	//dooHeuristic3 DooHeuristic3 = new dooHeuristic3(m,normInfX,normInfY);
+	dooHeuristic3 DooHeuristic3 = new dooHeuristic3(m,normeInf,normeInf);
+    		long end = System.currentTimeMillis();
+
+            try{
+                FileWriter fileWriter = new FileWriter("dooBis3d.txt", true);
+                PrintWriter printWriter = new PrintWriter(fileWriter);
+                printWriter.print("time :" + (end-start)/1000 + "\n");
+                printWriter.flush();
+    		}
+            catch (IOException i) {
+                i.printStackTrace();
+            }
+            System.out.println("time doo dooHeuristic : " + (end-start)/1000);
+	    System.out.println("\n value Cplex : " + valueCplex + "\n");
+    		System.out.println("\n\n\n\n\n ############################ \n\n\n\n\n");
+	
+        long start2 = System.currentTimeMillis();
+    	//dooNdimension dooNM1 = new dooNdimension(m,normInfX,normInfY);
+        doo Doo = new doo(m,normeInf,normeInf);
+        long end2= System.currentTimeMillis();  
+	   System.out.println("time doo : " + (end2-start2)/1000);
+	   System.out.println("\n value Cplex : " + valueCplex + " value DOO " + doo.finalValue +  "value DOO heuristic : " + dooHeuristic3.finalValue +   "\n");
+        System.out.println("time DOO :"  +  (end2-start2) + " time DOO heuristic:  " +  (end-start));	
+	   
+       if ( Math.abs(doo.finalValue - valueCplex)>0.05 || Math.abs(dooHeuristic3.finalValue - valueCplex)>0.05 ){
+        System.out.println("bug on values, value : " + valueCplex);
+
+       }
+
+
+    N++;
+	/*
+
+            try{
+                FileWriter fileWriter2 = new FileWriter("dooNM1Bis3d.txt",true);
+                PrintWriter printWriter2 = new PrintWriter(fileWriter2);
+                printWriter2.print("time :" + (end2-start2)/1000 + "\n");
+                printWriter2.flush();
+            }
+
+            catch (IOException i) {
+                i.printStackTrace();
+            }
+	*/
+//	System.out.println("time dooDimNM1 : " + (end2-start2)/1000);
+
+    /*
+      	long start2 = System.currentTimeMillis();
+		doo Doo = new doo(m);
+      	long end2 = System.currentTimeMillis();
+      	System.out.println("time doo : " + (end2-start2)/1000);
+
+    System.out.println("\n\n\n\n\n ############################ \n\n\n\n\n");
+    */
+	}
+}

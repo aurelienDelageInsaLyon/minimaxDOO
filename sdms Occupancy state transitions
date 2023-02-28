@@ -1,0 +1,168 @@
+compressed hist here: (none-at1, none-ah1, none-ah1)
+ absent hist  but in compress : (none-at1, none-ah1, none-ah1)
+ absent hist  but in compress : (none-at1, none-ah1, none-ah1)
+ compressed hist here: (none-ah1, none-at1, none-at1)
+ absent hist  but in compress : (none-ah1, none-at1, none-at1)
+ absent hist  but in compress : (none-ah1, none-at1, none-at1)
+ compressed hist here: (none-at1, none-ah1, none-at1)
+ absent hist  but in compress : (none-at1, none-ah1, none-at1)
+ absent hist  but in compress : (none-at1, none-ah1, none-at1)
+ compressed hist here: (none-ah1, none-at1, none-ah1)
+ absent hist  but in compress : (none-ah1, none-at1, none-ah1)
+ absent hist  but in compress : (none-ah1, none-at1, none-ah1)
+ uncompressed strategy P1 : <decision-rule type="stochastic">
+	<decision state="<history id="0x3adeaf0"  horizon="3" value="(none-at1, none-at1, none-at1)"/>">
+	 < action="ah1" probability="0.0971307/>
+	 < action="at1" probability="0.902869/>
+	<decision/>
+	<decision state="<history id="0x3b466a0"  horizon="3" value="(none-at1, none-at1, none-ah1)"/>">
+	 < action="ah1" probability="0.856245/>
+	 < action="at1" probability="0.143755/>
+	<decision/>
+	<decision state="<history id="0x3b58d40"  horizon="3" value="(none-at1, none-ah1, none-ah1)"/>">
+	 < action="ah1" probability="0.856245/>
+	 < action="at1" probability="0.143755/>
+	<decision/>
+	<decision state="<history id="0x3b7eaf0"  horizon="3" value="(none-ah1, none-at1, none-at1)"/>">
+	 < action="ah1" probability="0.0971307/>
+	 < action="at1" probability="0.902869/>
+	<decision/>
+	<decision state="<history id="0x3b88340"  horizon="3" value="(none-at1, none-ah1, none-at1)"/>">
+	 < action="ah1" probability="0.0971307/>
+	 < action="at1" probability="0.902869/>
+	<decision/>
+	<decision state="<history id="0x3b99c60"  horizon="3" value="(none-ah1, none-at1, none-ah1)"/>">
+	 < action="ah1" probability="0.856245/>
+	 < action="at1" probability="0.143755/>
+	<decision/>
+<decision-rule/>
+
+ uncompressed strategy P2 : <decision-rule type="stochastic">
+	<decision state="<history id="0x3b85780"  horizon="3" value="(none-at2, none-at2, none-at2)"/>">
+	 < action="ah2" probability="0.710747/>
+	 < action="at2" probability="0.289253/>
+	<decision/>
+<decision-rule/>
+
+ strats : [2](<decision-rule type="stochastic">
+	<decision state="<history id="0x3adeaf0"  horizon="3" value="(none-at1, none-at1, none-at1)"/>">
+	 < action="ah1" probability="0.0971307/>
+	 < action="at1" probability="0.902869/>
+	<decision/>
+	<decision state="<history id="0x3b466a0"  horizon="3" value="(none-at1, none-at1, none-ah1)"/>">
+	 < action="ah1" probability="0.856245/>
+	 < action="at1" probability="0.143755/>
+	<decision/>
+	<decision state="<history id="0x3b58d40"  horizon="3" value="(none-at1, none-ah1, none-ah1)"/>">
+	 < action="ah1" probability="0.856245/>
+	 < action="at1" probability="0.143755/>
+	<decision/>
+	<decision state="<history id="0x3b7eaf0"  horizon="3" value="(none-ah1, none-at1, none-at1)"/>">
+	 < action="ah1" probability="0.0971307/>
+	 < action="at1" probability="0.902869/>
+	<decision/>
+	<decision state="<history id="0x3b88340"  horizon="3" value="(none-at1, none-ah1, none-at1)"/>">
+	 < action="ah1" probability="0.0971307/>
+	 < action="at1" probability="0.902869/>
+	<decision/>
+	<decision state="<history id="0x3b99c60"  horizon="3" value="(none-ah1, none-at1, none-ah1)"/>">
+	 < action="ah1" probability="0.856245/>
+	 < action="at1" probability="0.143755/>
+	<decision/>
+<decision-rule/>
+, <decision-rule type="stochastic">
+	<decision state="<history id="0x3b85780"  horizon="3" value="(none-at2, none-at2, none-at2)"/>">
+	 < action="ah2" probability="0.710747/>
+	 < action="at2" probability="0.289253/>
+	<decision/>
+<decision-rule/>
+)
+ hash : 738989384546427
+ hash : 738989384546427
+ state : <occupancy-state size="2">
+	<probability joint_history=([2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](ah1, at2)) belief=BeliefState[1]( sh : 1.00000, default value =0.00000 )>
+			0.38641
+	</probability 
+	<probability joint_history=([2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, at2)) belief=BeliefState[1]( st : 1.00000, default value =0.00000 )>
+			0.61359
+	</probability 
+</occupancy-state>
+ state uncompressed : <occupancy-state size="6">
+	<probability joint_history=([2](none, none)-[2](at1, at2), [2](none, none)-[2](ah1, at2), [2](none, none)-[2](at1, at2)) belief=BeliefState[1]( st : 1.00000, default value =0.00000 )>
+			0.38320
+	</probability 
+	<probability joint_history=([2](none, none)-[2](at1, at2), [2](none, none)-[2](ah1, at2), [2](none, none)-[2](ah1, at2)) belief=BeliefState[1]( sh : 1.00000, default value =0.00000 )>
+			0.06329
+	</probability 
+	<probability joint_history=([2](none, none)-[2](ah1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, at2)) belief=BeliefState[1]( st : 1.00000, default value =0.00000 )>
+			0.16649
+	</probability 
+	<probability joint_history=([2](none, none)-[2](ah1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](ah1, at2)) belief=BeliefState[1]( sh : 1.00000, default value =0.00000 )>
+			0.23351
+	</probability 
+	<probability joint_history=([2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](ah1, at2)) belief=BeliefState[1]( sh : 1.00000, default value =0.00000 )>
+			0.08962
+	</probability 
+	<probability joint_history=([2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, at2)) belief=BeliefState[1]( st : 1.00000, default value =0.00000 )>
+			0.06390
+	</probability 
+</occupancy-state>
+ hash : 738989384546427
+ hash : 738989384546427
+ next state : <occupancy-state size="2">
+	<probability joint_history=([2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](ah1, ah2)) belief=BeliefState[1]( sh : 1.00000, default value =0.00000 )>
+			0.39046
+	</probability 
+	<probability joint_history=([2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, ah2)) belief=BeliefState[1]( st : 1.00000, default value =0.00000 )>
+			0.60954
+	</probability 
+</occupancy-state>
+ next state uncompressed : <occupancy-state size="9">
+	<probability joint_history=([2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](ah1, at2), [2](none, none)-[2](ah1, ah2)) belief=BeliefState[1]( sh : 1.00000, default value =0.00000 )>
+			0.08962
+	</probability 
+	<probability joint_history=([2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](ah1, ah2)) belief=BeliefState[1]( sh : 1.00000, default value =0.00000 )>
+			0.00042
+	</probability 
+	<probability joint_history=([2](none, none)-[2](at1, at2), [2](none, none)-[2](ah1, at2), [2](none, none)-[2](ah1, at2), [2](none, none)-[2](ah1, ah2)) belief=BeliefState[1]( sh : 1.00000, default value =0.00000 )>
+			0.06329
+	</probability 
+	<probability joint_history=([2](none, none)-[2](ah1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](ah1, at2), [2](none, none)-[2](ah1, ah2)) belief=BeliefState[1]( sh : 1.00000, default value =0.00000 )>
+			0.23351
+	</probability 
+	<probability joint_history=([2](none, none)-[2](at1, at2), [2](none, none)-[2](ah1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, ah2)) belief=BeliefState[1]( st : 1.00000, default value =0.00000 )>
+			0.38067
+	</probability 
+	<probability joint_history=([2](none, none)-[2](ah1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](ah1, ah2)) belief=BeliefState[1]( sh : 1.00000, default value =0.00000 )>
+			0.00110
+	</probability 
+	<probability joint_history=([2](none, none)-[2](ah1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, ah2)) belief=BeliefState[1]( st : 1.00000, default value =0.00000 )>
+			0.16539
+	</probability 
+	<probability joint_history=([2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](at1, ah2)) belief=BeliefState[1]( st : 1.00000, default value =0.00000 )>
+			0.06348
+	</probability 
+	<probability joint_history=([2](none, none)-[2](at1, at2), [2](none, none)-[2](ah1, at2), [2](none, none)-[2](at1, at2), [2](none, none)-[2](ah1, ah2)) belief=BeliefState[1]( sh : 1.00000, default value =0.00000 )>
+			0.00253
+	</probability 
+</occupancy-state>Academic license - for non-commercial use only - expires 2023-09-29
+Warning for adding constraints: zero or small (< 1e-13) coefficients, ignored
+Gurobi Optimizer version 9.1.0 build v9.1.0rc0 (linux64)
+Thread count: 6 physical cores, 12 logical processors, using up to 12 threads
+Optimize a model with 278 rows, 5 columns and 1377 nonzeros
+Model fingerprint: 0xdd65b6ac
+Coefficient statistics:
+  Matrix range     [5e-02, 4e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+00]
+Presolve removed 270 rows and 2 columns
+Presolve time: 0.00s
+Presolved: 8 rows, 3 columns, 21 nonzeros
+
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    1.1713822e+00   2.952304e+00   0.000000e+00      0s
+       1    3.7138221e-01   0.000000e+00   0.000000e+00      0s
+
+Solved in 1 iterations and 0.00 seconds
+Optimal objective  3.713822057e-01

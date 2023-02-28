@@ -1,0 +1,6 @@
+sed -i 's/Nmax.*//g' logLambdaClean.txt
+sed -i 's/^$/d' logLambdaClean.txt
+sed -i '/^$/d' logLambdaClean.txt
+sed -i 's/seed : ./\n/g' logLambdaClean.txt
+sed -i 's/repatition : (0.5,0.5)/ value : /g' logLambdaClean.txt
+sed -i 's/value  for epsilon/epsilon : /g' logLambdaClean.txt

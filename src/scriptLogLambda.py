@@ -75,12 +75,12 @@ for l in listLambda :
         #print("variance : " + str(varError[i]) + "mean : " + str(errorEpsLambda[i]))
     #print( " l : " + l + " time : " + str(timeEpsLambda))
     print("color : " + colors[counterList])
-    ax.plot([0.15,0.175,0.20,0.225,0.25],timeEpsLambda,label="lamda :"+l, marker=markers[counterList],color=colors[counterList])
+    ax.plot([0.15,0.175,0.20,0.225,0.25],timeEpsLambda,label="lambda :"+l, marker=markers[counterList],color=colors[counterList])
     ax.fill_between([0.15,0.175,0.20,0.225,0.25],timeEpsLambda,np.add(timeEpsLambda,varTime),alpha=0.2,color=colors[counterList])
     ax.fill_between([0.15,0.175,0.20,0.225,0.25],timeEpsLambda,np.add(timeEpsLambda,np.dot(varTime,-1)),alpha=0.2,color=colors[counterList])
     
     
-    ax2.plot([0.15,0.175,0.20,0.225,0.25],errorEpsLambda,label="lamda :"+l,marker=markers[counterList],color=colors[counterList])
+    ax2.plot([0.15,0.175,0.20,0.225,0.25],errorEpsLambda,label="lambda :"+l,marker=markers[counterList],color=colors[counterList])
     ax2.fill_between([0.15,0.175,0.20,0.225,0.25],errorEpsLambda,np.add(errorEpsLambda,varError),alpha=0.2,color=colors[counterList])
     ax2.fill_between([0.15,0.175,0.20,0.225,0.25],errorEpsLambda,np.add(errorEpsLambda,np.dot(varError,-1)),alpha=0.2,color=colors[counterList])
 
@@ -91,8 +91,8 @@ ax2.legend()
 ax2.set_ylabel("real error")
 ax2.set_xlabel("epsilon")
 
-fig.savefig("timeDOOFixBug.pdf")
-fig2.savefig("errorDOOFixBug.pdf")
+fig.savefig("timeDOO.pdf")
+fig2.savefig("errorDOO.pdf")
 
 plt.show()
 

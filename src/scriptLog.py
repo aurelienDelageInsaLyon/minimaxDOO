@@ -74,8 +74,8 @@ ax2.set_xlabel("epsilon")
 
 #plt.plot()
 
-fig.savefig("time_repartition.pdf")
-fig2.savefig("error_repartition.pdf")
+fig.savefig("time_distribution.pdf")
+fig2.savefig("error_distribution.pdf")
 
 plt.show()
 

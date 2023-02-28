@@ -1,0 +1,176 @@
+time doo dooHeuristic : 0
+time doo : 38
+time doo dooHeuristic : 3
+time doo : 150
+time doo dooHeuristic : 1
+time doo : 10
+time doo dooHeuristic : 4
+time doo : 91
+time doo dooHeuristic : 10
+time doo : 60
+time doo dooHeuristic : 5
+time doo : 42
+time doo dooHeuristic : 12
+time doo : 51
+time doo dooHeuristic : 5
+time doo : 72
+time doo dooHeuristic : 33
+time doo : 196
+time doo dooHeuristic : 29
+time doo : 51
+time doo dooHeuristic : 32
+time doo : 120
+time doo dooHeuristic : 2
+time doo : 29
+time doo dooHeuristic : 8
+time doo : 107
+time doo dooHeuristic : 1
+time doo : 16
+time doo dooHeuristic : 30
+time doo : 51
+time doo dooHeuristic : 32
+time doo : 103
+time doo dooHeuristic : 32
+time doo : 76
+time doo dooHeuristic : 31
+time doo : 43
+time doo dooHeuristic : 10
+time doo : 90
+time doo dooHeuristic : 0
+time doo : 28
+time doo dooHeuristic : 31
+time doo : 35
+time doo dooHeuristic : 9
+time doo : 17
+time doo dooHeuristic : 0
+time doo : 3
+time doo dooHeuristic : 0
+time doo : 4
+time doo dooHeuristic : 1
+time doo : 37
+time doo dooHeuristic : 4
+time doo : 75
+time doo dooHeuristic : 1
+time doo : 59
+time doo dooHeuristic : 26
+time doo : 74
+time doo dooHeuristic : 4
+time doo : 17
+time doo dooHeuristic : 9
+time doo : 22
+time doo dooHeuristic : 7
+time doo : 137
+time doo dooHeuristic : 10
+time doo : 78
+time doo dooHeuristic : 10
+time doo : 38
+time doo dooHeuristic : 2
+time doo : 10
+time doo dooHeuristic : 17
+time doo : 65
+time doo dooHeuristic : 3
+time doo : 17
+time doo dooHeuristic : 0
+time doo : 11
+time doo dooHeuristic : 1
+time doo : 11
+time doo dooHeuristic : 11
+time doo : 49
+time doo dooHeuristic : 1
+time doo : 624
+time doo dooHeuristic : 1
+time doo : 55
+time doo dooHeuristic : 3
+time doo : 877
+time doo dooHeuristic : 1
+time doo : 5
+time doo dooHeuristic : 2
+time doo : 21
+time doo dooHeuristic : 6
+time doo : 159
+time doo dooHeuristic : 4
+time doo : 25
+time doo dooHeuristic : 1
+time doo : 15
+time doo dooHeuristic : 6
+time doo : 193
+time doo dooHeuristic : 2
+time doo : 5
+time doo dooHeuristic : 30
+time doo : 87
+time doo dooHeuristic : 9
+time doo : 16
+time doo dooHeuristic : 1
+time doo : 8
+time doo dooHeuristic : 0
+time doo : 17
+time doo dooHeuristic : 0
+time doo : 16
+time doo dooHeuristic : 1
+time doo : 24
+time doo dooHeuristic : 15
+time doo : 46
+time doo dooHeuristic : 6
+time doo : 36
+time doo dooHeuristic : 11
+time doo : 26
+time doo dooHeuristic : 3
+time doo : 21
+time doo dooHeuristic : 5
+time doo : 23
+time doo dooHeuristic : 6
+time doo : 15
+time doo dooHeuristic : 3
+time doo : 55
+time doo dooHeuristic : 2
+time doo : 9
+time doo dooHeuristic : 15
+time doo : 108
+time doo dooHeuristic : 25
+time doo : 53
+time doo dooHeuristic : 0
+time doo : 5
+time doo dooHeuristic : 22
+time doo : 52
+time doo dooHeuristic : 14
+time doo : 38
+time doo dooHeuristic : 0
+time doo : 4
+time doo dooHeuristic : 29
+time doo : 98
+time doo dooHeuristic : 2
+time doo : 44
+time doo dooHeuristic : 26
+time doo : 69
+time doo dooHeuristic : 1
+time doo : 44
+time doo dooHeuristic : 33
+time doo : 81
+time doo dooHeuristic : 2
+time doo : 507
+time doo dooHeuristic : 27
+time doo : 80
+time doo dooHeuristic : 1
+time doo : 6
+time doo dooHeuristic : 1
+time doo : 70
+time doo dooHeuristic : 6
+time doo : 24
+time doo dooHeuristic : 0
+time doo : 13
+time doo dooHeuristic : 1
+time doo : 91
+time doo dooHeuristic : 0
+time doo : 2
+time doo dooHeuristic : 31
+time doo : 74
+time doo dooHeuristic : 9
+time doo : 41
+time doo dooHeuristic : 8
+time doo : 43
+time doo dooHeuristic : 5
+time doo : 38
+time doo dooHeuristic : 7
+time doo : 38
+time doo dooHeuristic : 17
+time doo : 852

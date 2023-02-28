@@ -16,10 +16,10 @@ for line in lines :
 	majorant.append(-float(line[3]))
 	minorant.append(-float(line[1]))
 
-plt.plot(majorant,label="lower-bound")
-plt.plot(minorant,label="upper-bound")
+plt.plot(majorant,label="pessimistic bound")
+plt.plot(minorant,label="optimistic bound")
 plt.xlabel("iterations")
 plt.ylabel("value")
 plt.legend()
 #plt.show()
-plt.savefig("nonSimplexHolderian.pdf")
+plt.savefig("nonSimplexHolderianBis.pdf")
